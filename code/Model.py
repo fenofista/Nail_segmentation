@@ -5,6 +5,10 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 device = 'cuda' if torch.cuda.is_available() else "cpu"
 # device = 'cpu'
+from helper import *
+
+
+to_gray = config['pre'].getboolean("to_gray")
 def get_model():
     class double_conv(nn.Module):
         def __init__(self, in_ch, out_ch):
@@ -104,6 +108,8 @@ def get_model():
             x = self.up4(x, x1)
             x = self.outc(x)
             return x
-        
-    model = UNet(1,1).to(device)
+    if to_gray:
+        model = UNet(1,1).to(device)
+    else:
+        model = UNet(3,1).to(device)
     return model
