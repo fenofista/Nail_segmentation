@@ -47,7 +47,9 @@ def get_dataset(name, augment):
             image = image[:,:,::-1]
             if to_gray:
                 image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            image = Image.fromarray(image)
+                image = Image.fromarray(image, "L")
+            else:
+                image = Image.fromarray(image)
             mask = Image.fromarray(mask)
             if self.augment:
                 image, mask = augmentation(image, mask)                                       
